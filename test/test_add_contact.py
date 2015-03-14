@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from application import Application
-from contact import Contact
+from fixture.application import Application
+from model.contact import Contact
 
 
 @pytest.fixture
@@ -13,16 +13,16 @@ def app(request):
 
 
 def test_add_contact(app):
-    app.login(username="admin", password="secret")
-    app.create_contact(Contact(first_name="firstName", middle_name="middleName", last_name="lastName",
+    app.session.login(username="admin", password="secret")
+    app.contact.create(Contact(first_name="firstName", middle_name="middleName", last_name="lastName",
                                nick="nick", title="titleTest", company="companyTest", address="addressTest",
                                tel_home="123", email="testMail@company"))
-    app.logout()
+    app.session.logout()
 
 
 def test_add_empty_contact(app):
-    app.login(username="admin", password="secret")
-    app.create_contact(Contact(first_name="", middle_name="", last_name="",
+    app.session.login(username="admin", password="secret")
+    app.contact.create(Contact(first_name="", middle_name="", last_name="",
                                nick="", title="", company="", address="",
                                tel_home="", email=""))
-    app.logout()
+    app.session.logout()
