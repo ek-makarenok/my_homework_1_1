@@ -61,11 +61,13 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if self.check_url_home_page():
+            wd.find_element_by_link_text("home").click()
 
     def return_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        if self.check_url_home_page():
+            wd.find_element_by_link_text("home page").click()
 
     def count(self):
         wd = self.app.wd
@@ -76,3 +78,7 @@ class ContactHelper:
         wd = self.app.wd
         if self.count() == 0:
             self.create(new_contact_data)
+
+    def check_url_home_page(self):
+        wd = self.app.wd
+        return not wd.current_url == "http://localhost/addressbook/"
