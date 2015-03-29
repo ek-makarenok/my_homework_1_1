@@ -22,7 +22,11 @@ class ContactHelper:
         self.change_field_value("company", contact.company)
         self.change_field_value("address", contact.address)
         self.change_field_value("home", contact.tel_home)
-        self.change_field_value("email", contact.email)
+        # check email
+        if contact.email is not None:
+            self.change_field_value("email", contact.email)
+        else:
+            wd.find_element_by_name("email").clear()
 
     def create(self, contact):
         wd = self.app.wd
@@ -47,7 +51,6 @@ class ContactHelper:
 
     def modify_first_contact(self, new_contact_data):
         wd = self.app.wd
-        self.select_first_contact()
         # open modification form
         wd.find_element_by_xpath("//img[@alt='Edit'][@title='Edit']").click()
         # fill contact form
@@ -63,3 +66,13 @@ class ContactHelper:
     def return_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def check_contact(self, new_contact_data):
+        wd = self.app.wd
+        if self.count() == 0:
+            self.create(new_contact_data)
