@@ -67,11 +67,6 @@ class GroupHelper:
         self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def check_group(self, new_group_data):
-        wd = self.app.wd
-        if self.count() == 0:
-            self.create(new_group_data)
-
     def check_url_group_page(self):
         wd = self.app.wd
         return not (wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0)

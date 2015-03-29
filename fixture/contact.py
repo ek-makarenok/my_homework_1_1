@@ -74,11 +74,6 @@ class ContactHelper:
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def check_contact(self, new_contact_data):
-        wd = self.app.wd
-        if self.count() == 0:
-            self.create(new_contact_data)
-
     def check_url_home_page(self):
         wd = self.app.wd
         return not wd.current_url == "http://localhost/addressbook/"
