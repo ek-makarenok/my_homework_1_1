@@ -1,6 +1,9 @@
 __author__ = 'makarenok'
 
 
+from model.group import Group
+
+
 class GroupHelper:
     def __init__(self, app):
         self.app = app
@@ -70,3 +73,14 @@ class GroupHelper:
     def check_url_group_page(self):
         wd = self.app.wd
         return not (wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0)
+
+    def get_group_list(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        groups = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            groups.append(Group(name = text, id = id))
+        return groups
+
