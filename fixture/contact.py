@@ -25,6 +25,8 @@ class ContactHelper:
         self.change_field_value("company", contact.company)
         self.change_field_value("address", contact.address)
         self.change_field_value("home", contact.homephone)
+        self.change_field_value("email2", contact.email2)
+        self.change_field_value("email3", contact.email3)
         # check email
         if contact.email is not None:
             self.change_field_value("email", contact.email)
