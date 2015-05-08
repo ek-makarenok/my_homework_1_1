@@ -37,7 +37,7 @@ class DbFixture:
                 lastname = row[2]
                 address = row[3]
                 all_phones = '\n'.join(filter(None, row[4:8]))
-                all_emails = '\n'.join(filter(None, row[8:-1]))
+                all_emails = '\n'.join(filter(None, row[-3:]))
                 list.append(Contact(id=str(id), firstname=firstname, lastname=lastname, address=address,
                                     all_emails_from_home_page=all_emails, all_phones_from_home_page=all_phones))
         finally:
