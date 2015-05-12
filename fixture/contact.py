@@ -181,3 +181,15 @@ class ContactHelper:
         secondaryphone = re.search("P: (.*)", text).group(1)
         return Contact(homephone=homephone, mobilephone=mobilephone,
                        workphone=workphone, secondaryphone=secondaryphone)
+
+    def add_contact_in_group(self, contact, group):
+        wd = self.app.wd
+        if not wd.find_element_by_id("%s" % contact.id).is_selected():
+            wd.find_element_by_id("%s" % contact.id).click()
+
+        group_pattern = "//div[@class='right']/select//option[contains(text(), \"%s\")]" % group.name
+        if not wd.find_element_by_xpath(group_pattern).is_selected():
+            wd.find_element_by_xpath(group_pattern).click()
+        wd.find_element_by_name("add").click()
+        wd.find_element_by_link_text("group page \"%s\"" % group.name).click()
+

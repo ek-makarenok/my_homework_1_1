@@ -125,3 +125,17 @@ class GroupHelper:
                 id_element = element.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id_element))
         return list(self.group_cache)
+
+    def filter_contacts_by_group(self, group):
+        wd = self.app.wd
+        group_pattern = "//form[@id='right']/select//option[contains(text(), \"%s\")]" % group.name
+        if not wd.find_element_by_xpath(group_pattern).is_selected():
+            wd.find_element_by_xpath(group_pattern).click()
+
+    def del_contact_out_group(self, contact, group):
+        wd = self.app.wd
+        self.filter_contacts_by_group(group)
+        if not wd.find_element_by_id("%s" % contact.id).is_selected():
+            wd.find_element_by_id("%s" % contact.id).click()
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_link_text("group page \"%s\"" % group.name).click()
